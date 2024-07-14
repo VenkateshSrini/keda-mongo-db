@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mngbdb-deploy
   name: mngbdb-deploy
-  namespace: time-zone
+  namespace: keda-sample
 spec:
   replicas: 1
   selector:

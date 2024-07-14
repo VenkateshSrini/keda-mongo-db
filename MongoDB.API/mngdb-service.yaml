@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mngbdb-deploy
   name: mngbdb-service
-  namespace: time-zone
+  namespace: keda-sample
 spec:
   ports:
   - port: 8007

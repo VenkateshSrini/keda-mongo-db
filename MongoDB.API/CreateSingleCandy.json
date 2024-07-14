@@ -1,0 +1,34 @@
+[
+  {
+    "id": "",
+    "name": "Derby Orange",
+    "description": "Orange Candy without Sugar",
+    "taste": "Tingee",
+    "price": 100,
+    "processingStatus": "created"
+  },
+  {
+    "id": "",
+    "name": "Derby Strawberry",
+    "description": "StrawBerry Candy without Sugar",
+    "taste": "Light Sweet",
+    "price": 100,
+    "processingStatus": "created"
+  },
+  {
+    "id": "",
+    "name": "Eclaire",
+    "description": "Coco chocolate with Sugar",
+    "taste": "Sweet",
+    "price": 100,
+    "processingStatus": "created"
+  },
+  {
+    "id": "",
+    "name": "Dark Chocolate",
+    "description": "Dark Chocolate with Sugar",
+    "taste": "bitter",
+    "price": 100,
+    "processingStatus": "created"
+  }
+]

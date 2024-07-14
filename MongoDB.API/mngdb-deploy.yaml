@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mngbdb-deploy
+  name: mngbdb-deploy
+  namespace: time-zone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mngbdb-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mngbdb-deploy
+    spec:
+      containers:
+      - image: venkateshsrini3/mngbdb-api:1.0
+        name: mngbdb
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: "podName"
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

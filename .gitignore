@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/MongoDB.API/.vs
+/MongoDB.API/bin/Debug/net8.0
+/MongoDB.API/obj
+/mongodb.job/.vs
+/mongodb.job/bin/Debug/net8.0
+/mongodb.job/obj
+*.user
+/Mongodb6.0.9.txt

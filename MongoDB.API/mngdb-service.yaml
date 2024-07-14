@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mngbdb-deploy
+  name: mngbdb-service
+  namespace: time-zone
+spec:
+  ports:
+  - port: 8007
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: mngbdb-deploy
+  type: LoadBalancer
+status:
+  loadBalancer: {}

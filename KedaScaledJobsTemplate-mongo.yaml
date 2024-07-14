@@ -1,0 +1,31 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: mongodb-triggered-job
+spec:
+  jobTargetRef:
+    template:
+      spec:
+        containers:
+        - name: dotnet-worker
+          image: your-dotnet-container-image
+          env:
+            - name: MONGODB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongodb-key
+        restartPolicy: Never
+  pollingInterval: 30   # How often KEDA will poll MongoDB (in seconds)
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
+  maxReplicaCount: 10   # Maximum number of jobs to run in parallel
+  triggers:
+  - type: mongodb
+    metadata:
+      # Required
+      connectionStringFromEnv: MONGODB_CONNECTION_STRING
+      dbName: your-database-name
+      collection: your-collection-name
+      query: '{"yourQueryKey": {"$exists": true}}'  # Adjust your query accordingly
+      queryValue: "1"  # The threshold above which KEDA will start scaling jobs

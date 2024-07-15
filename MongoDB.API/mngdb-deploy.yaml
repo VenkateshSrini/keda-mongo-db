@@ -29,3 +29,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: MongoDB__connectionString
+          valueFrom:
+            secretKeyRef:
+              name: mongo-db-secrets
+              key: connectionString

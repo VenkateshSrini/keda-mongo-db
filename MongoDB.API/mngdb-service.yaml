@@ -8,7 +8,7 @@ metadata:
   namespace: keda-sample
 spec:
   ports:
-  - port: 8007
+  - port: 1007
     protocol: TCP
     targetPort: 8080
   selector:

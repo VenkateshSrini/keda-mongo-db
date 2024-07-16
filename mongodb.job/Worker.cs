@@ -28,7 +28,7 @@ namespace mongodb.job
             {
                 _logger.LogInformation($"Processing candy {candy.Name}");
                 await _candyRepo.UpdateStatus(candy.Id, "processing");
-                await Task.Delay(5000);
+                await Task.Delay(60 * 1000);
                 _logger.LogInformation($"Candy {candy.Name} processed");
                 await _candyRepo.UpdateStatus(candy.Id, "processed");
             }

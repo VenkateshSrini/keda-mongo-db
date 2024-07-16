@@ -11,11 +11,11 @@ spec:
         - name: mng-dotnet-worker
           image: venkateshsrini3/mng-dotnet-worker:1.0
           env:
-            - name: MongoDB__connectionString
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-db-secrets
-                  key: connectionString
+          - name: MongoDB__connectionString
+            valueFrom:
+              secretKeyRef:
+                name: mongo-db-secrets
+                key: connectionString
         restartPolicy: Never
   pollingInterval: 30   # How often KEDA will poll MongoDB (in seconds)
   successfulJobsHistoryLimit: 10
@@ -24,13 +24,12 @@ spec:
   triggers:
   - type: mongodb
     metadata:
-      # Required
-      authenticationRef: 
-        name: mongodb-trigger 
       dbName: candies
       collection: Candies-ToProcess
       query: '{ProcessingStatus:{$exists:true, $eq:"created"}}'  # Adjust your query accordingly
       queryValue: "1"  # The threshold above which KEDA will start scaling jobs
+    authenticationRef: 
+      name: mongodb-trigger 
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -38,7 +37,7 @@ metadata:
   name: mongodb-trigger 
 spec:
   secretTargetRef:
-    - parameter: connectionString
-      name: mongodb-secret
-      key: connect
+  - parameter: connectionString
+    name: mongo-db-secrets
+    key: connectionString
 

@@ -9,7 +9,7 @@ spec:
       spec:
         containers:
         - name: mng-dotnet-worker
-          image: venkateshsrini3/mng-dotnet-worker:1.0
+          image: venkateshsrini3/mng-dotnet-worker:1.1
           env:
           - name: MongoDB__connectionString
             valueFrom:
@@ -26,7 +26,7 @@ spec:
     metadata:
       dbName: candies
       collection: Candies-ToProcess
-      query: '{ProcessingStatus:{$exists:true, $eq:"created"}}'  # Adjust your query accordingly
+      query: "{\"ProcessingStatus\":{\"$exists\":true, \"$eq\":\"created\"}}"  # Adjust your query accordingly
       queryValue: "1"  # The threshold above which KEDA will start scaling jobs
     authenticationRef: 
       name: mongodb-trigger 
@@ -35,6 +35,7 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: mongodb-trigger 
+  namespace: keda-sample
 spec:
   secretTargetRef:
   - parameter: connectionString

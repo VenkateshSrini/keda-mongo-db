@@ -11,3 +11,4 @@
 /mongodb.job/obj
 *.user
 /Mongodb6.0.9.txt
+/MongoDB.API/mongo-secrets.yaml

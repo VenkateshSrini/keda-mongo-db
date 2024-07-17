@@ -9,7 +9,7 @@ spec:
       spec:
         containers:
         - name: mng-dotnet-worker
-          image: venkateshsrini3/mng-dotnet-worker:1.1
+          image: venkateshsrini3/mng-dotnet-worker:1.3
           env:
           - name: MongoDB__connectionString
             valueFrom:

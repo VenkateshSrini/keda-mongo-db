@@ -17,10 +17,10 @@ spec:
                 name: mongo-db-secrets
                 key: connectionString
         restartPolicy: Never
-  pollingInterval: 30   # How often KEDA will poll MongoDB (in seconds)
+  pollingInterval: 10   # How often KEDA will poll MongoDB (in seconds)
   successfulJobsHistoryLimit: 10
   failedJobsHistoryLimit: 20
-  maxReplicaCount: 10   # Maximum number of jobs to run in parallel
+  maxReplicaCount: 1   # Maximum number of jobs to run in parallel
   triggers:
   - type: mongodb
     metadata:

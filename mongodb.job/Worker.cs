@@ -6,36 +6,45 @@ namespace mongodb.job
     {
         private readonly ILogger<Worker> _logger;
         private readonly ICandyRepo _candyRepo;
+        private readonly IDistributedLock _lockRepo;
+        private readonly string podName;
 
-        public Worker(ILogger<Worker> logger, ICandyRepo candyRepo)
+        public Worker(ILogger<Worker> logger, ICandyRepo candyRepo, IConfiguration configuration, IDistributedLock lockRepo)
         {
             _logger = logger;
             _candyRepo = candyRepo;
+            _lockRepo = lockRepo;
+            podName= configuration["podName"];
+
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            //while (!stoppingToken.IsCancellationRequested)
-            //{
-            //    if (_logger.IsEnabled(LogLevel.Information))
-            //    {
-            //        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            //    }
-            //    await Task.Delay(1000, stoppingToken);
-            //}
-            var candy = await _candyRepo.GetFirstCandyByStatus("created");
-            if (candy != null)
+            
+            var getToProcessCandyCount = await _candyRepo.GetCandiesCountByStatus("created");
+            for (int i = 0; i < getToProcessCandyCount; i++)
             {
-                _logger.LogInformation($"Processing candy {candy.Name}");
-                await _candyRepo.UpdateStatus(candy.Id, "processing");
-                //await Task.Delay(2 * 1000, stoppingToken);
-                _logger.LogInformation($"Candy {candy.Name} processed");
-                await _candyRepo.UpdateStatus(candy.Id, "processed");
+                var candy = await _candyRepo.GetFirstCandyByStatus("created");
+                if (candy != null)
+                {
+                    var lockId= $"{candy.Id}";
+                    bool locked = await _lockRepo.AcquireLockAsync(
+                        new Model.DBLock { Id = lockId, PodName= podName,Locked=true, ExpiresAt=DateTime.UtcNow } 
+                       
+                    );
+                    if(locked)
+                    {
+                        _logger.LogInformation($"Processing candy {candy.Name}");
+                        await _candyRepo.UpdateStatus(candy.Id, "processing");
+                        await _candyRepo.UpdateStatus(candy.Id, "processed");
+                        _logger.LogInformation($"Candy {candy.Name} processed");
+                        await _lockRepo.ReleaseLockAsync(lockId);
+                        break;
+                    }
+                }
             }
-            else
-            {
-                _logger.LogInformation("No candy to process");
-            }
+                   
+            
         }
     }
 }

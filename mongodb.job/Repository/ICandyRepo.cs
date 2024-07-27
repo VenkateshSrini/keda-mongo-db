@@ -11,6 +11,7 @@ namespace mongodb.job.Repository
     {
         Task<Candy> GetCandyById(string id);
         Task<Candy>GetFirstCandyByStatus(string status);
+        Task<int> GetCandiesCountByStatus(string status);
         Task<bool>UpdateStatus(string id, string status);
     }
 }

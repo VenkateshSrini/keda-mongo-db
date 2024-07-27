@@ -9,18 +9,22 @@ spec:
       spec:
         containers:
         - name: mng-dotnet-worker
-          image: venkateshsrini3/mng-dotnet-worker:1.3
+          image: venkateshsrini3/mng-dotnet-worker:1.11
           env:
           - name: MongoDB__connectionString
             valueFrom:
               secretKeyRef:
                 name: mongo-db-secrets
                 key: connectionString
+          - name: podName
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
         restartPolicy: Never
   pollingInterval: 10   # How often KEDA will poll MongoDB (in seconds)
   successfulJobsHistoryLimit: 10
   failedJobsHistoryLimit: 20
-  maxReplicaCount: 1   # Maximum number of jobs to run in parallel
+  maxReplicaCount: 10   # Maximum number of jobs to run in parallel
   triggers:
   - type: mongodb
     metadata:

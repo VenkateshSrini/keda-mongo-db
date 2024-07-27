@@ -17,6 +17,7 @@ namespace mongodb.job.ServiceExtension
             var mongoClient = new MongoClient(mongourl);
             services.AddSingleton<MongoUrl>(mongourl);
             services.AddSingleton<IMongoClient>(mongoClient);
+            services.AddSingleton<IDistributedLock, DBLockRepo>();
             services.AddSingleton<ICandyRepo, CandiesRepo>();
             return services;
         }

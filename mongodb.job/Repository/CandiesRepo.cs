@@ -29,7 +29,10 @@ namespace mongodb.job.Repository
         {
             return (await _candiesCollection.FindAsync(c => c.ProcessingStatus == status)).FirstOrDefault();
         }
-
+        public async Task<int> GetCandiesCountByStatus(string status)
+        {
+            return (int)(await _candiesCollection.CountDocumentsAsync(c => c.ProcessingStatus == status));
+        }
         public async Task<bool> UpdateStatus(string id, string status)
         {
             var filter = Builders<Candy>.Filter.Eq(nameof(Candy.Id), id);

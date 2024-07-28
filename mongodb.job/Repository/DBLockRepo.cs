@@ -50,7 +50,7 @@ namespace mongodb.job.Repository
             {
 
                 await _collection.InsertOneAsync(dbLock);
-               _logger.LogWarning($"Lock Accquired for {dbLock.Id} by PodName {_configuration["podName"]}");
+               //_logger.LogWarning($"Lock Accquired for {dbLock.Id} by PodName {_configuration["podName"]}");
                 
                 return true;
             }
@@ -58,7 +58,7 @@ namespace mongodb.job.Repository
             {
                 if (ex.WriteError.Category == ServerErrorCategory.DuplicateKey)
                 {
-                    _logger.LogError("Duplicate key error while acquiring lock: {0}", ex.Message);
+                    //_logger.LogError("Duplicate key error while acquiring lock: {0}", ex.Message);
                     return false;
                 }
                 throw;

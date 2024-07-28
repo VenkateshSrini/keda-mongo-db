@@ -9,7 +9,7 @@ spec:
       spec:
         containers:
         - name: mng-dotnet-worker
-          image: venkateshsrini3/mng-dotnet-worker:1.11
+          image: venkateshsrini3/mng-dotnet-worker:1.12
           env:
           - name: MongoDB__connectionString
             valueFrom:
@@ -21,7 +21,7 @@ spec:
               fieldRef:
                 fieldPath: metadata.name
         restartPolicy: Never
-  pollingInterval: 10   # How often KEDA will poll MongoDB (in seconds)
+  pollingInterval: 60   # How often KEDA will poll MongoDB (in seconds)
   successfulJobsHistoryLimit: 10
   failedJobsHistoryLimit: 20
   maxReplicaCount: 10   # Maximum number of jobs to run in parallel

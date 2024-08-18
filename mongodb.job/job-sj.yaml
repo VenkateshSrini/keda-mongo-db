@@ -22,7 +22,7 @@ spec:
                 fieldPath: metadata.name
         restartPolicy: Never
   pollingInterval: 60   # How often KEDA will poll MongoDB (in seconds)
-  successfulJobsHistoryLimit: 10
+  successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 20
   maxReplicaCount: 10   # Maximum number of jobs to run in parallel
   triggers:
